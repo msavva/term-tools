@@ -5,7 +5,7 @@
 export TERM_TOOLS_DIR=~/term-tools
 
 # vim by default instead of emacs
-set -o vi
+#set -o vi
 export EDITOR="vim"
 
 # store more shell history
@@ -74,7 +74,7 @@ if [ "$ZSH_VERSION" ]; then
 	}
 
 	# vim keybindings for zsh
-	bindkey -v
+	#bindkey -v
 	bindkey '\e[3~' delete-char
 	bindkey '^R' history-incremental-pattern-search-backward
 
@@ -82,16 +82,10 @@ fi
 
 # BASH-SPECIFIC CONFIG
 if [ "$BASH_VERSION" ]; then
-
 	# ls after every cd
 	function cd()  {
 		 builtin cd "$@" && ls_safe
 	}
-
-	# cdd browser: navigate with hjkl, esc: cancel, enter: use that dir
-	if [ -s ~/term-tools/cdd/cdd.sh ]; then
-		alias cdd=". ~/term-tools/cdd/cdd.sh"
-	fi
 
 	# Custom terminal: blue path and yellow git branch
 	#export PROMPT_DIRTRIM=2  # uncomment to trim to 2 directories

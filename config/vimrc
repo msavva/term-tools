@@ -41,7 +41,6 @@ set lazyredraw         " no redraws in macros
 set confirm            " dialog when :q, :w, :x, :wq fails
 set title              " change terminal title
 set nostartofline      " don't move cursor when switching buffers/files
-set nobackup           " that's what git is for
 set ttyfast            " smoother changes
 
 if has('unix') && system("uname") == "Linux\n"
@@ -100,21 +99,21 @@ let mapleader=','
 call yankstack#setup()
 nmap Y y$
 
-" Left/right -- switch tabs
-noremap <left>  gT
-noremap <right> gt
+" Ctrl-Left/right -- switch tabs
+noremap <c-left>  gT
+noremap <c-right> gt
 
-" Ctrl+left/right -- move tabs
-noremap <c-left>  :execute 'silent! tabmove ' . (tabpagenr()-2)<cr>
-noremap <c-right> :execute 'silent! tabmove ' . tabpagenr()<cr>
+" left/right -- move tabs
+"noremap <c-left>  :execute 'silent! tabmove ' . (tabpagenr()-2)<cr>
+"noremap <c-right> :execute 'silent! tabmove ' . tabpagenr()<cr>
 
-" Up/down -- switch windows
-noremap <down> <c-w>w
-noremap <up> <c-w>W
+" Ctrl-Up/down -- switch windows
+noremap <c-down> <c-w>w
+noremap <c-up> <c-w>W
 
-" Ctrl+up/down -- move windows
-noremap <c-down> <c-w>r
-noremap <c-up> <c-w>R
+" up/down -- move windows
+"noremap <c-down> <c-w>r
+"noremap <c-up> <c-w>R
 
 " Ctrl+alt+left/right -- move window into new tab left or right
 map <c-s-left> <c-w>T<c-left>
@@ -319,21 +318,6 @@ autocmd FileType tex hi Special ctermfg=10
 " cpp : eye-bleeding red --> bright blue
 autocmd FileType c,cpp,h,hpp hi Special ctermfg=4
 
-" Eclim -- eclipse + vim (thanks Tim)
-"   -- ctrl+space : code autocomplete
-"   -- enter : search context
-"   -- <leader>vc : validate c++ code
-"   -- <leader>fc : find c++ tag
-set completeopt=longest,menuone
-inoremap <nul> <C-x><C-u><C-n>
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<cr>"
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<cr>'
-inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<cr>'
-nnoremap <leader>vc <esc>:Validate<cr>
-nnoremap <leader>fc <esc>:CSearch<space>
-autocmd FileType c,cpp,h,hpp nnoremap <cr> <esc>:CSearchContext<cr>zO
-autocmd FileType c,cpp,h,hpp nnoremap <C-LeftMouse> <LeftMouse><esc>:CSearchContext<cr>zO
-
 " Automatically insert C++ header gates for new h/hpp files
 function! s:insert_gates()
   let gatename = '__' . substitute(toupper(expand("%:t")), "\\.", "_", "g")
@@ -449,10 +433,6 @@ noremap <leader>gd <esc>:Gdiff<cr>
 noremap <leader>gl <esc>:Glog<cr>
 noremap <leader>gc <esc>:Gcommit<cr>
 noremap <leader>gp <esc>:Gpush<cr>
-
-" Visual selection
-vnoremap <silent> <leader>f :call VisualSelection('f')<CR>
-vnoremap <silent> <leader>F :call VisualSelection('b')<CR>
 
 " ShowMarks -- toggle with <leader>mt
 "  -- only include letters (I'm not sure what 0123456789.'`^<>[]{}()\" refers to but they

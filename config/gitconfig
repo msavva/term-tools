@@ -1,6 +1,6 @@
 [user]
-	name = Sean Bell
-	email = sbell@cs.cornell.edu
+	name = Wenzel Jakob
+	email = wenzel@cs.cornell.edu
 [color]
 	ui = auto
 [alias]
@@ -27,9 +27,17 @@
 	autosetupmerge = true
 [push]
 	default = upstream
-[mergetool "vimdiff3"]
-	cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
-[mergetool "gvimdiff3"]
-	cmd = gvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+[difftool "kdiff3"]
+    path = kdiff3
+    trustExitCode = false
+[difftool]
+    prompt = false
+[diff]
+    tool = kdiff3
+[mergetool "kdiff3"]
+    path = kdiff3
+    trustExitCode = false
+[mergetool]
+    keepBackup = false
 [merge]
-	tool = vimdiff3
+    tool = kdiff3
