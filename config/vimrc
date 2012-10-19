@@ -20,6 +20,7 @@ set t_Co=256
 set background=dark
 syntax on
 colorscheme tomorrow-night
+hi Folded ctermfg=248 ctermbg=237 guibg=#3a3a3a guifg=#a8a8a8
 
 " Misc
 let is_bash=1          " we are using bash
