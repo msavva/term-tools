@@ -19,7 +19,7 @@ filetype plugin indent on
 set t_Co=256
 set background=dark
 syntax on
-colorscheme wombat256
+colorscheme tomorrow-night
 
 " Misc
 let is_bash=1          " we are using bash
