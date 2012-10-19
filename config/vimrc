@@ -79,8 +79,8 @@ set showmatch      " show brace match
 set matchtime=2    " faster brace match
 set report=0       " report all changes
 set ruler          " show position in bottom right
-" Backspace can move back beyond the start of the insertion (smart)
-set backspace=2
+set backspace=2    " Backspace can move back beyond the start of the insertion (smart)
+au BufRead,BufNewFile SCons* set filetype=python
 
 " STFU
 set noerrorbells visualbell t_vb=
@@ -301,7 +301,7 @@ autocmd FileType vim setlocal foldmethod=marker
 autocmd FileType crontab setlocal backupcopy=yes
 
 " C/C++ -- smart indentation
-autocmd FileTYpe c,cpp,h,hpp setlocal smartindent cindent
+autocmd FileType c,cpp,h,hpp setlocal smartindent cindent
 
 " }}}
 
