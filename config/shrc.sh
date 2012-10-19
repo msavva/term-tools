@@ -20,11 +20,6 @@ if [[ "$TERM" == "xterm" ]]; then
     export TERM="xterm-256color"
 fi
 
-# solarized color scheme
-if command -v dircolors >/dev/null 2>&1; then
-	eval $(dircolors $TERM_TOOLS_DIR/dircolors-solarized/dircolors.ansi-dark)
-fi
-
 # syntax highlighting in less
 if [ -e /usr/share/source-highlight/src-hilite-lesspipe.sh ]; then
   export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
@@ -111,6 +106,5 @@ if [ "$BASH_VERSION" ]; then
 
 	# automatically correct cd spelling errors
 	shopt -s cdspell
-
 fi
 
