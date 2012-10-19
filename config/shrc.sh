@@ -108,3 +108,4 @@ if [ "$BASH_VERSION" ]; then
 	shopt -s cdspell
 fi
 
+function pw { ~/term-tools/config/make-password.pl -a $1 ~/.pwdata ; }
