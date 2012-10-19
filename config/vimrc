@@ -16,15 +16,10 @@ filetype plugin indent on
 
 " Global config {{{
 
-" Color scheme -- dark, 256 color, desert theme
-"set background=dark
-"set t_Co=256
-"syntax on
-"colorscheme desert
+set t_Co=256
 set background=dark
-set t_Co=16
 syntax on
-colorscheme solarized
+colorscheme wombat256
 
 " Misc
 let is_bash=1          " we are using bash
@@ -64,7 +59,7 @@ set completeopt=menu,preview " Completion with a menu
 
 " Indentation -- width of 4 spaces
 set autoindent     " automatic indentation
-set nosmartindent  " disable C-style indenting by default (only useful for C/C++)
+set smartindent    " enable C-style indenting by default (useful for C/C++)
 set tabstop=4      " Number of spaces that a <Tab> in the file counts for (default 8)
 set shiftwidth=4   " Number of spaces to use for each step of (auto)indent.
 set textwidth=0    " no hard wrapping by default
@@ -83,6 +78,8 @@ set showmatch      " show brace match
 set matchtime=2    " faster brace match
 set report=0       " report all changes
 set ruler          " show position in bottom right
+" Backspace can move back beyond the start of the insertion (smart)
+set backspace=2
 
 " STFU
 set noerrorbells visualbell t_vb=
@@ -151,6 +148,11 @@ noremap <leader>wq <c-w>q " quit current window
 noremap <leader>wc <c-w>c " close current window
 noremap <leader>wo <c-w>o " make current window only one on screen
 noremap <leader>wf <c-w>v:CtrlP<cr>
+
+" Navigate buffers
+noremap <leader>bp :bp<cr>
+noremap <leader>bn :bn<cr>
+noremap <leader>bd :bd<cr>
 
 " Edit file in current window
 noremap <leader>ew :e<space>
@@ -393,15 +395,15 @@ nmap <leader>k <esc>:call EMNerd(1)<cr>
 hi link EasyMotionTarget WarningMsg
 hi link EasyMotionShade Normal
 
-" TagBar -- ctags on right (mnemonic: tagBar)
-"   -- bt : toggle
-"   -- bo : open
-"   -- bf : find
-"   -- bc : close
-nnoremap <leader>bt :TagbarToggle<cr><c-w=
-nnoremap <leader>bo :TagbarOpen<cr><c-w>=
-nnoremap <leader>bf :TagbarOpen fj<cr><c-w>=2H:call EasyMotion#JK(0, 0)<cr>
-nnoremap <leader>bc :TagbarClose<cr><c-w>=
+" TagBar -- ctags on right (mnemonic: Ctags)
+"   -- ct : toggle
+"   -- co : open
+"   -- cf : find
+"   -- cc : close
+nnoremap <leader>ct :TagbarToggle<cr><c-w=
+nnoremap <leader>co :TagbarOpen<cr><c-w>=
+nnoremap <leader>cf :TagbarOpen fj<cr><c-w>=2H:call EasyMotion#JK(0, 0)<cr>
+nnoremap <leader>cc :TagbarClose<cr><c-w>=
 
 " NERDTree -- file browser on left (mnemonic: All files)
 "   -- at : toggle
@@ -416,7 +418,6 @@ noremap <leader>ac <esc>:NERDTreeClose<cr><c-w>=
 " NERDTree -- open if no files are listed and set width to 30
 autocmd vimenter * if !argc() | NERDTree | endif
 let g:NERDTreeWinSize = 30
-
 
 " CloseTag -- close html tags automagically
 autocmd FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=1
