@@ -155,6 +155,11 @@ noremap <leader>bp :bp<cr>
 noremap <leader>bn :bn<cr>
 noremap <leader>bd :bd<cr>
 
+" Even shorter shortcuts
+noremap bp :bp<cr>
+noremap bn :bn<cr>
+noremap bd :bd<cr>
+
 " Edit file in current window
 noremap <leader>ew :e<space>
 noremap <leader>we :e<space>
