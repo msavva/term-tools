@@ -29,12 +29,14 @@ if [ -d ~/.oh-my-zsh ]; then
 	fi
 
 	ln $@ -s ~/term-tools/oh-my-zsh-custom/zsh-syntax-highlighting plugins/zsh-syntax-highlighting
-	ln $@ -s ~/term-tools/config/sbell.zsh-theme themes/sbell.zsh-theme
+	ln $@ -s ~/term-tools/config/wjakob.zsh-theme themes/wjakob.zsh-theme
 	cd -
 
 	# set theme and add syntax plugin
 	ZSHRC_TMP=~/term-tools/zshrc-tmp
-	sed -e 's/ZSH_THEME=.*$/ZSH_THEME="sbell"/' -e 's/plugins=\((.*)\)/plugins=(\1 zsh-syntax-highlighting)/' -e 's/zsh-syntax-highlighting zsh-syntax-highlighting/zsh-syntax-highlighting/' ~/.zshrc > $ZSHRC_TMP
+	sed -e 's/ZSH_THEME=.*$/ZSH_THEME="wjakob"/' -e 's/plugins=\((.*)\)/plugins=(\1 zsh-syntax-highlighting)/' -e 's/zsh-syntax-highlighting zsh-syntax-highlighting/zsh-syntax-highlighting/' ~/.zshrc > $ZSHRC_TMP
+	echo "function pw { make-password -a $1 ~/.pwdata ; }" >> $ZSHRC_TMP
+	echo "source $ZSH/oh-my-zsh.sh" >> $ZSHRC_TMP
 	mv -f $ZSHRC_TMP ~/.zshrc
 else
 	echo "ERROR: ~/.oh-my-zsh does not exist"
