@@ -41,11 +41,17 @@ if uname | grep Darwin > /dev/null; then
 	function ls_safe {
 		~/term-tools/config/timeout3.sh -t 1 ls -G
 	}
+
+	# Also bind find to 'gfind' (install via brew)
+	alias find=gfind
 else
 	function ls_safe {
 		~/term-tools/config/timeout3.sh -t 1 ls --color=auto
 	}
 fi
+
+# Always use htop
+alias top=htop
 
 # autojump wrapper (I've renamed "function j" in
 #   autojump.sh to "function j_impl")
