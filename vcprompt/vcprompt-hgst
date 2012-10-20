@@ -1,0 +1,84 @@
+#!/usr/bin/perl
+# Author: Alex Efros <powerman-asdf@yandex.ru>, 2012
+# License: Public Domain
+#
+# vcprompt-hgst: fast `hg st` replacement for vcprompt
+#
+# This script should be executed in root directory of Mercurial repository.
+#
+# In some cases false detection of modified files will happens (when
+# .hg/dirstate cache outdated), this can be fixed by updating cache (for
+# ex. by running real `hg st`).
+#
+# Exit codes:
+#   0 - no modified or unknown files detected
+#   1 - modified files detected
+#   2 - unknown files detected
+#   3 - both modified and unknown files detected
+#   255 - error
+
+# use warnings;
+# use strict;
+
+our $VERSION = 2.00;
+
+my $found_modified = 0;
+my $found_unknown  = 0;
+
+
+my $hgignore = qr/\A\z/;
+if (open my $f, '<', '.hgignore') {
+    # TODO Implement real .hgignore syntax:
+    # http://www.selenic.com/mercurial/hgignore.5.html
+    # FIXME current implementation may lead to security issue - .hgignore
+    #       may contain perl code inside regex and it will be executed
+    $hgignore = join q{|}, map {chomp; length $_ ? ($_[0] != '*' ? qr/$_/ : qr/.$_/ ) : ()} <$f>;
+}
+
+open my $f, '<', '.hg/dirstate'     or exit 255;
+my @dirstate = unpack '@40 (a N l> l> N/a)*', join q{}, <$f>;
+
+my %seen;
+for my $i (0 .. $#dirstate/5) {
+    my ($status, $mode, $size, $mtime, $filename) = @dirstate[$i*5 .. $i*5+4];
+    # n (normal) - usual files, may be modified
+    # a (added) - will have unset mode/size/mtime, and thus detected as modified
+    # r (removed) - must be ignored, to detect at unknown if this file exists
+    # m (3-way merged) - TODO I've no idea what this mean
+    next if $status eq 'r';
+    $filename =~ s/\0.*//s;
+
+    $filename =~ m{(.*/)?(.+)}s    or exit 255;
+    $seen{$1}{$2} = 1;
+
+    if (!$found_modified) {
+        my @stat = stat $filename;
+        if (@stat && !($stat[2]==$mode && $stat[7]==$size && $stat[9]==$mtime)) {
+            $found_modified = 1;
+        }
+    }
+}
+
+my @dirs = (q{});   # dirs here must end with /, except root dir (empty string)
+DIR: while (@dirs) {
+    my $dir = shift @dirs;
+    next if $dir eq '.hg/';
+
+    my $known = $seen{$dir} || {};
+    $known->{'.'} = $known->{'..'} = 1;
+
+    opendir my $d, $dir || './'     or exit 255;
+    for my $name (readdir $d) {
+        if (!$known->{$name} && "$dir$name" !~ /$hgignore/o) {
+            if (-d "$dir$name") {
+                push @dirs, "$dir$name/";
+            }
+            else {
+                $found_unknown = 1;
+                last DIR;
+            }
+        }
+    }
+}
+
+exit(($found_modified << 0) | ($found_unknown << 1));
