@@ -2,7 +2,7 @@
 username = Wenzel Jakob <wenzel@cs.cornell.edu>
 
 [web]
-cacertgs = ~/term-tools/config/ca-certificates.crt
+cacerts = ~/term-tools/config/ca-certificates.crt
 
 [hooks]
 # Always show a list of changed files
