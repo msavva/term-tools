@@ -234,6 +234,7 @@ command! E :e
 "    Python -- PEP8 style (should suppress all style warnings)
 autocmd FileType c,cpp,h,hpp nnoremap <leader>sf <esc>:%!astyle -A1 -t<cr>
 autocmd FileType python nnoremap <leader>sf <esc>:PyLintAuto<cr>
+autocmd Syntax cpp syn match cType "Float"
 
 " }}}
 

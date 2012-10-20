@@ -66,7 +66,7 @@
 	url = git://github.com/chriskempson/tomorrow-theme.git
 [submodule "vim/bundle/tomorrow-night"]
 	path = vim/bundle/tomorrow-night
-	url = git://github.com/ootoovak/vim-tomorrow-night.git
+	url = git://github.com/wjakob/vim-tomorrow-night.git
 [submodule "vim/bundle/python-mode"]
 	path = vim/bundle/python-mode
 	url = git://github.com/klen/python-mode.git
