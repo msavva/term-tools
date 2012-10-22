@@ -412,6 +412,10 @@ nnoremap <leader>co :TagbarOpen<cr><c-w>=
 nnoremap <leader>cf :TagbarOpen fj<cr><c-w>=2H:call EasyMotion#JK(0, 0)<cr>
 nnoremap <leader>cc :TagbarClose<cr><c-w>=
 
+" Add an extension to FSwitch so that it works with the Mitsuba directory structure
+au! BufEnter *.cpp let b:fswitchdst = 'h,hpp'   | let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|,reg:|src/lib|include/mitsuba/|'
+au! BufEnter *.h   let b:fswitchdst = 'c,cpp,m' | let b:fswitchlocs = 'reg:/include/src/,reg:/include.*/src/,ifrel:|/include/|../src|,reg:|include/mitsuba/|src/lib|'
+
 " NERDTree -- file browser on left (mnemonic: All files)
 "   -- at : toggle
 "   -- ao : open
