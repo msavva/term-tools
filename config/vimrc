@@ -246,6 +246,9 @@ set timeout timeoutlen=1000 ttimeoutlen=100
 " Re-adjust windows on window resize
 autocmd VimResized * wincmd =
 
+" Allow collapsing/expanding folds interactively
+autocmd FileType c,cpp,h,hpp,python set foldcolumn=2
+
 " Insert mode -- don't undo folds when typing
 autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
 autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
