@@ -1,11 +1,36 @@
 #!/usr/bin/perl
 
+# Password generator script.
+#
+# Passwords are generated from three pieces of information: the name of the
+# entity for which a password is being generated (public), a passphrase known
+# by the user (a relatively weak secret but not stored anywhere on the
+# computer), and a file containing random data (a strong secret but one that
+# might be compromised by an adversary who has taken over the machine).  It is
+# fine--but not necessary--to reuse the same passphrase for all of your
+# passwords.  Passwords can't be broken unless both of the two secrets are
+# compromised or the adversary can crack MD5. Using a stronger hash function
+# such as SHA-2 would be good, but the hash function is probably not the weak
+# point in this scheme.
+#
+# Since the script takes several arguments, it may be convenient to create your
+# own script or alias that invokes this one and passes the appropriate key-file
+# as an argument. The accompanying script 'pw.release' can be used and
+# customized to your own requirements.
+#
+# To create a key-file, I recommend the following command:
+#
+#   head -c 500 < /dev/random  >  <filename>
+#
+# Written by Andrew Myers, c. 2010. Version of Oct. 23, 2012.
+
 use MIME::Base64;
 use Digest::MD5 qw(md5_base64);
 use strict;
 
 my $shuffle = 1;
 my $alpha = 0;
+my $nopassphrase = 0;
 
 while (1) {
     if ($ARGV[0] eq '-s') {
@@ -14,33 +39,46 @@ while (1) {
     } elsif ($ARGV[0] eq '-a') {
 	$alpha = 1;
 	shift @ARGV;
+    } elsif ($ARGV[0] eq '-p') {
+	$nopassphrase = !$nopassphrase;
+	shift @ARGV;
     } else {
 	last;
     }
 }
 
 if ($#ARGV != 1) {
-    print STDERR "Usage: make-password [-s] [-a] <identifier> <key-file>\n";
-    print STDERR "  key-file should contains secret, unpredictable data\n";
+    print STDERR "Usage: make-password [-s] [-a] [-p] <identifier> <key-file|passphrase>\n";
+    print STDERR "  where key-file should contain secret, unpredictable data.\n";
     print STDERR "  -s: toggle shuffling (on by default)\n";
     print STDERR "  -a: alphanumeric only\n";
+    print STDERR "  -p: do not use passphrase (not recommended)\n";
     exit 1;
 }
 
-my $passphrase = $ARGV[0];
-
-undef $/;
+my $identifier = $ARGV[0];
 
 my $keyfile = $ARGV[1];
-my $bits;
+my $bits, my $passphrase;
 
-open (KEYFILE, $keyfile);
-
-while (length($bits) < 20) {
-    read KEYFILE, $bits, 20, length($bits)
+if (!open (KEYFILE, $keyfile)) {
+    print STDERR "Cannot open $keyfile, instead using \"$keyfile\" as a passphrase.\r\n";
+    $bits = '';
+    $passphrase = $keyfile;
+} else {
+    if (!$nopassphrase) {
+	print 'Passphrase: ';
+	system('stty -echo');
+	$passphrase = <STDIN>;
+	system('stty echo'); print "\r\n";
+	chomp $passphrase;
+    }
+    while (length($bits) < 20) {
+        read KEYFILE, $bits, 20, length($bits)
+    }
 }
 
-my $md5 = md5_base64($passphrase, $bits);
+my $md5 = md5_base64($identifier, $passphrase, $bits);
 my $md5_chars =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
