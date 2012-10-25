@@ -112,6 +112,11 @@ if [ "$BASH_VERSION" ]; then
 
 	# automatically correct cd spelling errors
 	shopt -s cdspell
+
+	# The correctall feature is at times painful to use with 'cp' and 'mv' -- disable it!
+	# http://superuser.com/questions/251818/exceptions-to-zsh-correctall-feature
+	alias cp='nocorrect cp '
+	alias mv='nocorrect mv '
 fi
 
 function pw { ~/term-tools/config/make-password.pl -p -a $1 ~/.pwdata ; }
