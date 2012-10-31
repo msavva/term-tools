@@ -499,7 +499,7 @@ let g:tex_flavor='latex'
 set grepprg=grep\ -nH\ $*
 
 " Latex leader: use , instead of `
-let g:Tex_Leader=','
+"let g:Tex_Leader=','
 
 " Don't fold paragraphs or subsubsections
 " (add ,subsubsection,paragraph to end of list to fold those too)
