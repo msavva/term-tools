@@ -74,10 +74,22 @@ if has('conceal')
 	syn match texMathSymbol '\\mathcal{Y}' contained conceal cchar=𝓨
 	syn match texMathSymbol '\\mathcal{Z}' contained conceal cchar=𝓩
 
+	syn match texStatement '\\item\>' contained conceal cchar=•
+	syn match texMathSymbol '\\dd' contained conceal cchar=d
+	syn match texDelimiter '\\{' contained conceal cchar={
+	syn match texDelimiter '\\}' contained conceal cchar=}
+	syn match texMathSymbol '\\setminus' contained conceal cchar=\
+	syn match texMathSymbol '\\coloneqq' contained conceal cchar=≔
+
 	" hide \text delimiter etc inside math mode
 	if !exists("g:tex_nospell") || !g:tex_nospell
-	 syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\=text\|mbox\)\s*{'	end='}'	concealends keepend contains=@texFoldGroup,@Spell
+	 syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\=text\|mbox\|mathrm\)\s*{'	end='}'	concealends keepend contains=@texFoldGroup,@Spell
 	else
-	 syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\=text\|mbox\)\s*{'	end='}'	concealends keepend contains=@texFoldGroup
+	 syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\=text\|mbox\|mathrm\)\s*{'	end='}'	concealends keepend contains=@texFoldGroup
 	endif
+
+	syn region texBoldMathText matchgroup=texStatement start='\\\(mathbf\|bm\){' end='}' concealends keepend contains=@texMathZoneGroup
+ 	syn cluster texMathZoneGroup add=texBoldMathText
+
+	hi texBoldMathText ctermfg=white guifg=white
 endif
