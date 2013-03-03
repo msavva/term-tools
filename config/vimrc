@@ -333,10 +333,9 @@ autocmd FileType c,cpp,h,hpp hi Special ctermfg=4
 " Automatically insert C++ header gates for new h/hpp files
 function! s:insert_gates()
   let gatename = '__' . substitute(toupper(expand("%:t")), "\\.", "_", "g")
-  execute "normal! i#ifndef " . gatename
-  execute "normal! o#define " . gatename
+  execute "normal! i#if !defined(" . gatename . ")\n#define " . gatename
   execute "normal! Go#endif /* " . gatename . " */"
-  execute "normal! ggo"
+  execute "normal! ggjo"
 endfunction
 autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 
@@ -467,10 +466,10 @@ hi ShowMarksHLm ctermfg=white ctermbg=darkgray cterm=bold guifg=blue guibg=light
 let g:html_indent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
-
 " Python -- check on the fly instead of on write
 let g:pymode_lint_write = 0
 let g:pymode_lint_onfly = 0
+let g:pymode_rope = 0
 
 " }}}
 

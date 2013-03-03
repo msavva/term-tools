@@ -41,3 +41,5 @@
     keepBackup = false
 [merge]
     tool = kdiff3
+[core]
+	pager = less -r
