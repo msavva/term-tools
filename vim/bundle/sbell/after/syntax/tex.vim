@@ -91,5 +91,5 @@ if has('conceal')
 	syn region texBoldMathText matchgroup=texStatement start='\\\(mathbf\|bm\){' end='}' concealends keepend contains=@texMathZoneGroup
  	syn cluster texMathZoneGroup add=texBoldMathText
 
-	hi texBoldMathText ctermfg=white guifg=white
+	hi texBoldMathText ctermfg=white guifg=white cterm=bold gui=bold
 endif

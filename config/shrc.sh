@@ -79,6 +79,8 @@ if [ "$ZSH_VERSION" ]; then
 	bindkey '\e[3~' delete-char
 	bindkey '^R' history-incremental-pattern-search-backward
 
+	# make scp work the way it does in bash
+	unsetopt nomatch
 fi
 
 # BASH-SPECIFIC CONFIG
