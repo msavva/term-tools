@@ -1,6 +1,3 @@
-[user]
-	name = Wenzel Jakob
-	email = wenzel@cs.cornell.edu
 [color]
 	ui = auto
 [alias]
@@ -27,19 +24,8 @@
 	autosetupmerge = true
 [push]
 	default = upstream
-[difftool "kdiff3"]
-    path = kdiff3
-    trustExitCode = false
-[difftool]
-    prompt = false
-[diff]
-    tool = kdiff3
-[mergetool "kdiff3"]
-    path = kdiff3
-    trustExitCode = false
-[mergetool]
-    keepBackup = false
-[merge]
-    tool = kdiff3
 [core]
 	pager = less -r
+[user]
+	name = Manolis Savva
+	email = manolis.savva@gmail.com
